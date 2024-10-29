@@ -47,7 +47,8 @@ public class PhysicsCircle extends PhysicsObject {
 	}
 
 
+	@Override
+	public void useGravity(float force) {
 
-
-	
+	}
 }
