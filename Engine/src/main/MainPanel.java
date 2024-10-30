@@ -61,22 +61,12 @@ public class MainPanel extends JPanel implements ActionListener {
 
 		// needs to be abstracted out
 
-		velocity.y += gravity.y;
-
-		s1.shape.x += velocity.x;
-		s1.shape.y += velocity.y;
-
-		c1.shape.x += velocity.x;
-		c1.shape.y += velocity.y;
-
-		if(s1.shape.y + (2 * s1.shape.height) >= 800){
-			s1.shape.y = 800 - (2* s1.shape.height);
-			velocity.y = -velocity.y * 0.9f;
-		}
 
 
 
-		//s1.useGravity(5);
+
+
+		s1.useGravity(0.5f);
 
 
 
