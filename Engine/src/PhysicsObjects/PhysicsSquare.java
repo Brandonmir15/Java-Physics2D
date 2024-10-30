@@ -3,6 +3,7 @@ package PhysicsObjects;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.Color;
+import java.util.Vector;
 
 import vector.Vector2D;
 
@@ -11,6 +12,8 @@ public class PhysicsSquare extends PhysicsObject{
 	public int n;
 	public Vector2D cords;
 
+
+	// This velocity is a problem rn
 
 
 	public Color color = Color.blue;
@@ -45,8 +48,10 @@ public class PhysicsSquare extends PhysicsObject{
 	@Override
 	public void useGravity(float force) {
 
+
 		Vector2D gravity = new Vector2D(0, force);
-		Vector2D velocity = new Vector2D(0, 0);
+		velocity.y += gravity.y;
+
 
 		velocity.y += gravity.y;
 
@@ -54,10 +59,16 @@ public class PhysicsSquare extends PhysicsObject{
 		this.shape.y += velocity.y;
 
 
-
-		if(this.shape.y + (2 * this.shape.height) >= 800){
-			this.shape.y = 800 - (2* this.shape.height);
+		// an issue with velocity here
+		// Velocity Works but isnt being applied back
+		if (this.shape.y + (2 * this.shape.height) >= 800) {
+			this.shape.y = 800 - (2 * this.shape.height);
 			velocity.y = -velocity.y * 0.9f;
 		}
+
+		// Cords dont change, issue to be fixed
+		System.out.print("(" + this.shape.x + "," + this.shape.y + ")");
+		System.out.println(" | Velocity:" + velocity.y);
+
 	}
 }

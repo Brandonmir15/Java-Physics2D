@@ -18,6 +18,15 @@ public class Main{
 		frame1.add(panel1);
 		
 		frame1.setVisible(true);
+
+
+
+
+
+
+
+
+
 	}
 
 }
