@@ -1,10 +1,8 @@
 package main;
 
+import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import javax.swing.JPanel;
-import javax.swing.Timer;
+import java.awt.event.*;
 
 import PhysicsObjects.PhysicsCircle;
 import PhysicsObjects.PhysicsSquare;
@@ -36,6 +34,11 @@ public class MainPanel extends JPanel implements ActionListener {
 		timer = new Timer(16, this); // Roughly 60 FPS
 		timer.start();
 	}
+
+
+
+
+
 
 	@Override
 	public void paintComponent(Graphics g) {
@@ -89,4 +92,5 @@ public class MainPanel extends JPanel implements ActionListener {
 
 
 	}
+
 }
