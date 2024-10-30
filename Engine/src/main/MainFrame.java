@@ -38,6 +38,7 @@ public class MainFrame extends JFrame{
 		System.out.println("(" + x + "," + y + ")");
 		revalidate();
 		repaint();
+		//hi
 	}
 
 
