@@ -21,25 +21,12 @@ public class MainFrame extends JFrame{
 		setLocationRelativeTo(null);
 		setResizable(false);
 
-		addMouseListener(new MouseAdapter() {
-			@Override
-			public void mousePressed(MouseEvent e) {
-				if (e.getButton() == MouseEvent.BUTTON1) { // Check if MOUSE1 (left button) is pressed
-					addLabelAtPosition(e.getX(), e.getY());
-				}
-			}
-		});
+
 
 
 	}
 
-	private void addLabelAtPosition(int x, int y) {
 
-		System.out.println("(" + x + "," + y + ")");
-		revalidate();
-		repaint();
-		//hi
-	}
 
 
 

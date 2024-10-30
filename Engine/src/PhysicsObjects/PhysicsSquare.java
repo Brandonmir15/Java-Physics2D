@@ -10,15 +10,10 @@ import vector.Vector2D;
 public class PhysicsSquare extends PhysicsObject{
 	
 	public int n;
-	public Vector2D cords;
 
 
-	// This velocity is a problem rn
-
-
-	public Color color = Color.blue;
 	public Rectangle2D.Double shape;
-	private final int OFFSET = 400;
+
 	
 	public PhysicsSquare() {
 		
