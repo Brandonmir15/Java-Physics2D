@@ -17,7 +17,8 @@ public class Vector2D_Test {
 		
 		System.out.println(v2.scale(5));
 		
-		System.out.println(v2.magnitude(v3));
+		//System.out.println(v2.magnitude(v3));
+			//Previous magnitude()
 	
 		System.out.println(v2.normalize());
 		

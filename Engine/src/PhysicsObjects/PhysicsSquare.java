@@ -14,7 +14,8 @@ public class PhysicsSquare extends PhysicsObject{
 
 	public Rectangle2D.Double shape;
 
-	
+	Vector2D velocity = new Vector2D(0,0);
+
 	public PhysicsSquare() {
 		
 		this.n = 1;

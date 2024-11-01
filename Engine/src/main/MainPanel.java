@@ -9,13 +9,15 @@ import java.util.List;
 import PhysicsObjects.PhysicsCircle;
 import PhysicsObjects.PhysicsSquare;
 import vector.Vector2D;
+import vector.Vector2D_Test;
 
 public class MainPanel extends JPanel implements ActionListener {
 
+	private PhysicsCircle circle;
 
 	private Timer timer;
 	private final Vector2D gravity = new Vector2D(0, 0.5f);
-	private Vector2D velocity = new Vector2D(0, 0);
+	//private Vector2D velocity = new Vector2D(0, 0);
 
 
 	private List<PhysicsCircle> circles = new ArrayList<>();
@@ -50,7 +52,6 @@ public class MainPanel extends JPanel implements ActionListener {
 
 		Color color = new Color((int)(Math.random() * 255), (int)(Math.random() * 255), (int)(Math.random() * 255));
 
-
 		PhysicsCircle newCircle = new PhysicsCircle(25, new Vector2D(x, y), color);
 		circles.add(newCircle);
 		repaint();
@@ -62,10 +63,6 @@ public class MainPanel extends JPanel implements ActionListener {
 		Graphics2D g2d = (Graphics2D) g;
 
 		g2d.setStroke(new BasicStroke(3));
-
-
-
-
 
 		for (PhysicsCircle circle : circles) {
 			g2d.fill(circle.shape);
@@ -81,13 +78,34 @@ public class MainPanel extends JPanel implements ActionListener {
 			circle.useGravity(0.5f);
 		}
 
+		for(int i = 0; i<circles.size(); i++){
+			for(int j = i+1; j<circles.size(); j++){
+				collision(circles.get(i), circles.get(j));
+			}
+		}
+
 
 
 
 		repaint();
 	}
 
-	public static void collision(){
+	public static void collision(PhysicsCircle c1, PhysicsCircle c2){
+
+		//FindDistance
+		//check if less than critical
+		// if so handle collision
+
+		if(c1.distance(c2) < (c1.radius + c2.radius)){
+
+			Vector2D temp = new Vector2D(c1.velocity.x, c1.velocity.y);
+			c1.velocity = new Vector2D(c2.velocity.x, c2.velocity.y);
+			c2.velocity = temp;
+
+
+		}
+
+
 
 
 
