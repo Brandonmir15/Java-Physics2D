@@ -24,6 +24,7 @@ public class MainPanel extends JPanel implements ActionListener {
 
 	public MainPanel() {
 		initialize();
+		//j
 	}
 
 	public void initialize() {
