@@ -3,7 +3,7 @@ package main;
 import java.awt.Color;
 import java.awt.Dimension;
 
-import javax.swing.*;
+
 
 public class Main{
 
