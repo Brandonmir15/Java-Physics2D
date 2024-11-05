@@ -44,4 +44,8 @@ public class PhysicsSquare extends PhysicsObject{
 		this.shape.setFrame(this.position.x + OFFSET, this.position.y + OFFSET, n, n);
 	}
 
+	public void checkEdgeCollision() {
+
+	}
+
 }

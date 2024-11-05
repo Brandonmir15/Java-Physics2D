@@ -22,7 +22,7 @@ public class Vector2D_Test {
 	
 		System.out.println(v2.normalize());
 		
-		System.out.println(v2.findDotProduct(v3));
+		System.out.println(v3.findDotProduct(v2, v3));
 
 	}
 }

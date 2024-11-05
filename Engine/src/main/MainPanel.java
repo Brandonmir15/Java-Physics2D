@@ -17,13 +17,12 @@ public class MainPanel extends JPanel implements Runnable {
 	private Thread game;
 	private boolean running = true;
 	private PhysicsCircle circle;
-
 	private Timer timer;
 	private final Vector2D gravity = new Vector2D(0, 0.5f);
 	//private Vector2D velocity = new Vector2D(0, 0);
 
 
-	private List<PhysicsCircle> circles = new ArrayList<>();
+	private static List<PhysicsCircle> circles = new ArrayList<>();
 
 	public MainPanel() {
 		initialize();
@@ -50,6 +49,8 @@ public class MainPanel extends JPanel implements Runnable {
 
 		Color color = new Color((int)(Math.random() * 255), (int)(Math.random() * 255), (int)(Math.random() * 255));
 
+		//Create new circle at mouse position, random color, set radius
+			//Add impulse to created PhysicsCircle
 		PhysicsCircle newCircle = new PhysicsCircle(25, new Vector2D(x, y), color);
 		circles.add(newCircle);
 		repaint();
@@ -105,21 +106,45 @@ public class MainPanel extends JPanel implements Runnable {
 
 	public void update(){
 
-
 		for(int i = 0; i < circles.size(); i++) {
 			PhysicsCircle circle = circles.get(i);
+			for(int j = 0; j < circles.size(); j++){
+				if(j != i){
+					PhysicsCircle otherCircle = circles.get(j);
+					if(circle.circleCircleIntersect(otherCircle)){
+						circle.resolveCollision(otherCircle);
+					}
+				}
+			}
+
 			circle.useGravity();
+
+			circle.updateShape();
+
+			//circle.impulse();
 			circle.update(1/60);
+
 		}
-
-
 
 	}
 
 
 
-	public static void collision(PhysicsCircle c1, PhysicsCircle c2){
+	public static void circleCircleIntersect(){
+		for (int i = 0; i < circles.size(); i++){
+			// Reference object
+			PhysicsCircle refCircle = circles.get(i);
+			for(int j = 0; j < circles.size(); j++){
+				if(j != i){
+					// Comparing object
+					PhysicsCircle compCircle = circles.get(j);
+					//circleCircleIntersect(refCircle, compCircle);
+					// If distance <= radiSum
+					return;
 
+				}
+			}
+		}
 		
 	}
 }
