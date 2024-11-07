@@ -85,10 +85,12 @@ public class PhysicsCircle extends PhysicsObject {
 	}
 
 	// Collision detection
-	public boolean circleCircleIntersect(PhysicsCircle c1){
+	public void circleCircleIntersect(PhysicsCircle otherCircle){
 
-		return (this.distanceMagnitude(c1) <= (radius + c1.radius));
-
+		// Distance in terms of vector?
+		if(this.distanceMagnitude(otherCircle) <= (radius + otherCircle.radius)){
+			resolveCollision(otherCircle);
+		}
 	}
 
 	// Relative velocity between two circles

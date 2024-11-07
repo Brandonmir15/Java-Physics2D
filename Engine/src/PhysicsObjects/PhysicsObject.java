@@ -25,14 +25,6 @@ public abstract class PhysicsObject extends Vector2D {
 	// We need this because we cooked the code
 	public abstract void updateShape();
 
-	/*
-	// Apply a random x-axis impulse to each circle
-	public int impulse() {
-		// Create random value of -1 : 1
-        return (int) Math.pow(-1, (int)((Math.random() * 2)));
-	}
-	*/
-
 	public void applyImpulse(){
 		// this.velocity = this.velocity(impulse(), 0);
 	}
@@ -58,46 +50,59 @@ public abstract class PhysicsObject extends Vector2D {
 
 	public void resolveCollision(PhysicsObject B){
 
+		Vector2D normal = position.subtract(B.position).normalize();
+
 		// Calculate relative velocity
-		Vector2D rv = new Vector2D((B.velocity.x - velocity.x), (B.velocity.y - velocity.y));
+		Vector2D rv = velocity.subtract(B.velocity);
 
 		// Calculate relative velocity in terms of the normal direction
-		// 			Applying relative velocity onto the normal
-		float velAlongNormal = findDotProduct(rv, (distance(B)).normalize());
+		float velAlongNormal = rv.dot(normal);
 
-		// 					IMPORTANT !!!!
-		// Resolve if objects are moving toward each other
+		// Don't resolve if velocities are separating
 		if(velAlongNormal > 0)
 			return;
 
-		// Calculate restitution
-		double e = 0.98; // float e = min(A.elasticity, B.elasticity);
+		// Calculate restitution [elasticity]
+		// Assuming perfect elasticity [1.0]
+		float e = 1; // float e = min(A.elasticity, B.elasticity);
 
-		// Calculate impulse [j] scalar
-			// Should be a float, casting to double because [e] is a double
-		double j = -(1 + e) * velAlongNormal;
-		j /= 1 / mass + 1 / B.mass;
+		// Calculate impulse [j]
+		float scalarImpulse = -(1 + e) * velAlongNormal;
+		scalarImpulse /= 1 / mass + 1 / B.mass;
 
 		// Inverse mass [invMass] is used a lot; put Object.invMass  = 1 / Obj.mass a property of the object...
 
 		// Apply the impulse
 			// This is so ugly ( T o T)
-		Vector2D impulse = (distance(B)).normalize().scale(j);
+			// scalarImpulse * normal
+		Vector2D impulse = normal.scale(scalarImpulse);
 
-		// A.velocity -= 1/ A.mass * impulse
-		// A.velocity = A.velocity.subtract(impulse);
+		//velocity -= 1/ A.mass * impulse
+		//velocity = velocity.subtract(impulse);
 		velocity = velocity.subtract(impulse.scale((1/mass)));
 
-		// B.velocity += 1/ B.mass * impulse
-		// B.velocity = B.velocity.add(impulse);
-		B.velocity = B.velocity.add(impulse.scale((1/B.mass)));
+		//B.velocity += 1/ B.mass * impulse
+		//B.velocity = B.velocity.add(impulse);
+		B.velocity = velocity.add(impulse.scale((1/B.mass)));
+
+
+
+		// For collisions involving differing masses
+		/*
+		float massSum = mass + B.mass;
+		float ratio = mass / massSum;
+		velocity -= ratio * impulse;
+
+		ratio = B.mass / massSum;
+		B.velocity += ratio * impulse;
+		*/
 	}
 
 	public void update(float dt) {
 
-		// Using Verlet Integeration 
-
+		// Using Verlet Integration
 		Vector2D newAcceleration = acceleration.scale((0.016));
+
 		velocity = position.subtract(lastPosition);
 
 		lastPosition = new Vector2D(position.x, position.y);

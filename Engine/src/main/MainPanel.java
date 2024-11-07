@@ -104,30 +104,27 @@ public class MainPanel extends JPanel implements Runnable {
 		}
 	}
 
-	public void update(){
+	public void update() {
 
-		for(int i = 0; i < circles.size(); i++) {
-			PhysicsCircle circle = circles.get(i);
-			for(int j = 0; j < circles.size(); j++){
-				if(j != i){
-					PhysicsCircle otherCircle = circles.get(j);
-					if(circle.circleCircleIntersect(otherCircle)){
-						circle.resolveCollision(otherCircle);
+		for (int i = 0; i < circles.size(); i++) {
+			PhysicsCircle refCircle = circles.get(i);
+
+				for (int j = 0; j < circles.size(); j++) {
+					if (j != i) {
+						PhysicsCircle otherCircle = circles.get(j);
+						refCircle.circleCircleIntersect(otherCircle);
 					}
 				}
+
+			refCircle.useGravity();
+
+			refCircle.updateShape();
+
+			refCircle.update(1 / 60);
+
 			}
 
-			circle.useGravity();
-
-			circle.updateShape();
-
-			//circle.impulse();
-			circle.update(1/60);
-
 		}
-
-	}
-
 
 
 	public static void circleCircleIntersect(){
