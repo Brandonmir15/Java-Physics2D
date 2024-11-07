@@ -1,37 +1,13 @@
 package PhysicsObjects;
 import java.awt.geom.Ellipse2D;
 import java.awt.Color;
-
-
+//import jdk.incubator.vector.VectorShape;
 import vector.Vector2D;
 
 public class PhysicsCircle extends PhysicsObject {
 	
 	public float radius;
 	public Ellipse2D.Double shape;
-	
-
-	public PhysicsCircle(){
-
-		this.radius = 1;
-		this.position = new Vector2D(0,0);
-		this.lastPosition = new Vector2D(position.x, position.y);
-		shape = new Ellipse2D.Double(this.position.x + OFFSET, this.position.y + OFFSET, 1, 1);
-		
-
-	}
-	public PhysicsCircle(float radius, Vector2D position) {
-		
-		this.radius = radius;
-		this.position = position;
-		this.lastPosition = new Vector2D(position.x, position.y);
-		this.shape = new Ellipse2D.Double(this.position.x + OFFSET, this.position.y + OFFSET, radius, radius);
-		
-	}
-
-	public void setColor(Color color){
-		this.color = color;
-	}
 
 	public PhysicsCircle(float radius, Vector2D position, Color color){
 
@@ -43,14 +19,16 @@ public class PhysicsCircle extends PhysicsObject {
 
 	}
 
-
+	public void setColor(Color color){
+		this.color = color;
+	}
 
 	public void updateShape() {
+
 		this.shape.setFrame(this.position.x + OFFSET, this.position.y + OFFSET, radius, radius);
 
 		this.checkWindowCollision();
 
-		//this.circleCircleIntersect();
 	}
 
 
@@ -88,10 +66,25 @@ public class PhysicsCircle extends PhysicsObject {
 	public void circleCircleIntersect(PhysicsCircle otherCircle){
 
 		// Distance in terms of vector?
-		if(this.distanceMagnitude(otherCircle) <= (radius + otherCircle.radius)){
-			resolveCollision(otherCircle);
+
+		if ((radius + otherCircle.radius) >= this.position.distance(otherCircle.position).magnitude()){
+
+			this.setColor(Color.RED);
+			otherCircle.setColor(Color.RED);
+
+		this.testCollision(otherCircle);
+
+		}
+		else {
+			this.setColor(Color.BLUE);
+			otherCircle.setColor(Color.BLUE);
 		}
 	}
+	public void testCollision(PhysicsCircle B){
+		acceleration = acceleration.scale(-100);
+		B.acceleration = acceleration.scale(-100);
+	}
+
 
 	// Relative velocity between two circles
 	public Vector2D relativeVelocity(PhysicsCircle other) {

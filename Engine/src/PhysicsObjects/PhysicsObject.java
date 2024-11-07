@@ -32,7 +32,7 @@ public abstract class PhysicsObject extends Vector2D {
 
 	public void useGravity() {
 
-		this.acceleration = new Vector2D(GRAVITY * ((int)(Math.random() * 3) - 1), GRAVITY);
+		this.acceleration = new Vector2D(0, GRAVITY);
 
 	}
 
@@ -48,7 +48,7 @@ public abstract class PhysicsObject extends Vector2D {
 	// Newtons Law of Restitution states that V' = e * V
 	// [velocity after collision] == [velocity before] * [constant]
 
-	public void resolveCollision(PhysicsObject B){
+	public void resolveCollision(PhysicsCircle B){
 
 		Vector2D normal = position.subtract(B.position).normalize();
 

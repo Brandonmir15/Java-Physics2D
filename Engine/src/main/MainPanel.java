@@ -56,7 +56,7 @@ public class MainPanel extends JPanel implements Runnable {
 		repaint();
 	}
 
-	
+
 
 	private void startGame() {
 		game = new Thread(this);
@@ -105,43 +105,18 @@ public class MainPanel extends JPanel implements Runnable {
 	}
 
 	public void update() {
-
 		for (int i = 0; i < circles.size(); i++) {
-			PhysicsCircle refCircle = circles.get(i);
+			PhysicsCircle circle1 = circles.get(i);
+			circle1.useGravity();
+			circle1.updateShape();
 
-				for (int j = 0; j < circles.size(); j++) {
-					if (j != i) {
-						PhysicsCircle otherCircle = circles.get(j);
-						refCircle.circleCircleIntersect(otherCircle);
-					}
-				}
+			for (int j = i + 1; j < circles.size(); j++) {
+					PhysicsCircle circle2 = circles.get(j);
 
-			refCircle.useGravity();
-
-			refCircle.updateShape();
-
-			refCircle.update(1 / 60);
-
+					circle1.circleCircleIntersect(circle2);
 			}
+			circle1.update(1 / 60);
 
 		}
-
-
-	public static void circleCircleIntersect(){
-		for (int i = 0; i < circles.size(); i++){
-			// Reference object
-			PhysicsCircle refCircle = circles.get(i);
-			for(int j = 0; j < circles.size(); j++){
-				if(j != i){
-					// Comparing object
-					PhysicsCircle compCircle = circles.get(j);
-					//circleCircleIntersect(refCircle, compCircle);
-					// If distance <= radiSum
-					return;
-
-				}
-			}
-		}
-		
 	}
 }
