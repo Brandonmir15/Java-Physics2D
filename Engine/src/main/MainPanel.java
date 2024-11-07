@@ -107,6 +107,7 @@ public class MainPanel extends JPanel implements Runnable {
 	public void update() {
 		for (int i = 0; i < circles.size(); i++) {
 			PhysicsCircle circle1 = circles.get(i);
+
 			circle1.useGravity();
 			circle1.updateShape();
 
@@ -115,7 +116,7 @@ public class MainPanel extends JPanel implements Runnable {
 
 					circle1.circleCircleIntersect(circle2);
 			}
-			circle1.update(1 / 60);
+			circle1.update(1 / 120);
 
 		}
 	}

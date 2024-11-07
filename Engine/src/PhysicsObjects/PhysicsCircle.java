@@ -81,8 +81,8 @@ public class PhysicsCircle extends PhysicsObject {
 		}
 	}
 	public void testCollision(PhysicsCircle B){
-		acceleration = acceleration.scale(-100);
-		B.acceleration = acceleration.scale(-100);
+		acceleration = acceleration.scale(-10);
+		B.acceleration = acceleration.scale(-10);
 	}
 
 

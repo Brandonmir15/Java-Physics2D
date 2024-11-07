@@ -32,7 +32,7 @@ public abstract class PhysicsObject extends Vector2D {
 
 	public void useGravity() {
 
-		this.acceleration = new Vector2D(0, GRAVITY);
+		this.acceleration = new Vector2D((float) (GRAVITY * (Math.pow(-1, ((float)((int)(Math.random() * 2)))))), GRAVITY);
 
 	}
 
