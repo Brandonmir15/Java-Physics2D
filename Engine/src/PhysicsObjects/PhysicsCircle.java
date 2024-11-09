@@ -80,6 +80,9 @@ public class PhysicsCircle extends PhysicsObject {
 			otherCircle.setColor(Color.BLUE);
 		}
 	}
+
+
+
 	public void testCollision(PhysicsCircle B){
 		acceleration = acceleration.scale(-10);
 		B.acceleration = acceleration.scale(-10);

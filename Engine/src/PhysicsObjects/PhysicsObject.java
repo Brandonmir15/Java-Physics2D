@@ -3,6 +3,9 @@ package PhysicsObjects;
 import vector.Vector2D;
 
 import java.awt.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.function.ToDoubleBiFunction;
 
 public abstract class PhysicsObject extends Vector2D {
@@ -36,17 +39,7 @@ public abstract class PhysicsObject extends Vector2D {
 
 	}
 
-	// V^(AB) * dot * normal = -e (V^(B) - V(A)) * dot * normal
-	// Resulting velocity [V'] with an applied force and direction
-		// Relative velocity with an applied force, direction, and multiplied by elasticity (Energy loss)
-	// The circle will collide and bounce in a given direction with a force [normal * dot]
-	// At a certain velocity [V^(AB)] with a given impulse (-e)
-		// e.min(A.elasticity, B.elasticity);
-	// Coefficient of restitution - Elasticity || Bounciness
-	// Only one decimal value will be used during impulse calculation for Epsilon [e]
-	// Using the lowest restitution involved in collision should give intuitive results
-	// Newtons Law of Restitution states that V' = e * V
-	// [velocity after collision] == [velocity before] * [constant]
+
 
 	public void resolveCollision(PhysicsCircle B){
 
@@ -98,9 +91,44 @@ public abstract class PhysicsObject extends Vector2D {
 		*/
 	}
 
-	public void update(float dt) {
 
-		// Using Verlet Integration
+	//	Pairs the circles in list for localCollision
+	//
+	public static Map<PhysicsCircle, PhysicsCircle> pair(List<PhysicsCircle> circles) {
+
+		Map<PhysicsCircle, PhysicsCircle> keyPairs = new HashMap<PhysicsCircle, PhysicsCircle>();
+
+		for	(int i = 0; i < circles.size(); i++){
+			for (int j =0; j < circles.size(); j++){
+				PhysicsCircle refCircle = circles.get(i);
+				PhysicsCircle oppCircle = circles.get(j);
+
+				if(i == j) continue;
+
+				if((refCircle.radius + oppCircle.radius) >= refCircle.position.distance(oppCircle.position).magnitude()){
+					keyPairs.put(refCircle, oppCircle);
+				}
+			}
+		}
+		return keyPairs;
+	}
+
+	// 	Cull duplicate pairs
+	//	Buggy code ToT
+	public void cullDupes(Map<PhysicsCircle, PhysicsCircle> circlePairs){
+
+
+
+
+
+
+	}
+
+
+
+		public void update(float dt) {
+
+		// Using Varlet Integration
 		Vector2D newAcceleration = acceleration.scale((0.016));
 
 		velocity = position.subtract(lastPosition);

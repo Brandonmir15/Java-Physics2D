@@ -21,7 +21,6 @@ public class MainPanel extends JPanel implements Runnable {
 	private final Vector2D gravity = new Vector2D(0, 0.5f);
 	//private Vector2D velocity = new Vector2D(0, 0);
 
-
 	private static List<PhysicsCircle> circles = new ArrayList<>();
 
 	public MainPanel() {
@@ -62,6 +61,7 @@ public class MainPanel extends JPanel implements Runnable {
 		game = new Thread(this);
 		game.start();
 	}
+
 
 	@Override
 	public void run() {
@@ -116,7 +116,7 @@ public class MainPanel extends JPanel implements Runnable {
 
 					circle1.circleCircleIntersect(circle2);
 			}
-			circle1.update(1 / 120);
+			circle1.update(1 / 60);
 
 		}
 	}
