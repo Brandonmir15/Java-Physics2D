@@ -33,19 +33,12 @@ public class Vector2D {
 	}
 	
 	//Modules
-	public Vector2D add(Vector2D other) {
-		return new Vector2D(x + other.x, y + other.y);
-	}
-	public Vector2D subtract(Vector2D  other) {
-		return new Vector2D(x - other.x, y - other.y);
-	}
-	public Vector2D scale(double scalar) {
-		return new Vector2D(x * (float)scalar, y * (float)scalar);
-	}
-	//magnitude parameter vector intake was never used
-	public float magnitude() {
-		return (float) Math.sqrt((x * x)+(y * y));
-	}
+	public Vector2D add (Vector2D other) { return new Vector2D(x + other.x, y + other.y); }
+	public Vector2D subtract (Vector2D  other) { return new Vector2D(x - other.x, y - other.y);}
+	public Vector2D scale (double scalar) { return new Vector2D(x * (float)scalar, y * (float)scalar);}
+	public float magnitude() { return (float) Math.sqrt((x * x)+(y * y)); }
+
+
 
 	public float distanceMagnitude(Vector2D other){
 

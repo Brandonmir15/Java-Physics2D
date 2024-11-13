@@ -11,6 +11,9 @@ import PhysicsObjects.PhysicsCircle;
 import PhysicsObjects.PhysicsSquare;
 import vector.Vector2D;
 
+import static PhysicsObjects.PhysicsCircle.broadPair;
+import static PhysicsObjects.PhysicsCircle.keyValueResolve;
+
 
 public class MainPanel extends JPanel implements Runnable {
 
@@ -46,11 +49,11 @@ public class MainPanel extends JPanel implements Runnable {
 	private void SpawnCircleAtPos(int x, int y) {
 		System.out.println("Mouse Clicked || (" + x + ", " + y + ")");
 
-		Color color = new Color((int)(Math.random() * 255), (int)(Math.random() * 255), (int)(Math.random() * 255));
+		//Color color = new Color((int)(Math.random() * 255), (int)(Math.random() * 255), (int)(Math.random() * 255));
 
 		//Create new circle at mouse position, random color, set radius
 			//Add impulse to created PhysicsCircle
-		PhysicsCircle newCircle = new PhysicsCircle(25, new Vector2D(x, y), color);
+		PhysicsCircle newCircle = new PhysicsCircle(25, new Vector2D(x, y));
 		circles.add(newCircle);
 		repaint();
 	}
@@ -111,12 +114,9 @@ public class MainPanel extends JPanel implements Runnable {
 			circle1.useGravity();
 			circle1.updateShape();
 
-			for (int j = i + 1; j < circles.size(); j++) {
-					PhysicsCircle circle2 = circles.get(j);
+			keyValueResolve(broadPair(circles));
 
-					circle1.circleCircleIntersect(circle2);
-			}
-			circle1.update(1 / 60);
+			circle1.update(1 / 120);
 
 		}
 	}

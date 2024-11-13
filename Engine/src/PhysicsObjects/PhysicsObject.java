@@ -18,11 +18,12 @@ public abstract class PhysicsObject extends Vector2D {
 	public Vector2D position = new Vector2D();
 	public Vector2D lastPosition = new Vector2D();
 	public Vector2D velocity = new Vector2D();
+
 	public Vector2D acceleration;
 	public float mass;
 
 	// JFrame
-	public Color color;
+	public Color color = Color.blue;
 
 
 	// We need this because we cooked the code
@@ -34,7 +35,7 @@ public abstract class PhysicsObject extends Vector2D {
 
 
 	public void useGravity() {
-
+		//
 		this.acceleration = new Vector2D((float) (GRAVITY * (Math.pow(-1, ((float)((int)(Math.random() * 2)))))), GRAVITY);
 
 	}
@@ -45,40 +46,28 @@ public abstract class PhysicsObject extends Vector2D {
 
 		Vector2D normal = position.subtract(B.position).normalize();
 
-		// Calculate relative velocity
 		Vector2D rv = velocity.subtract(B.velocity);
 
-		// Calculate relative velocity in terms of the normal direction
 		float velAlongNormal = rv.dot(normal);
 
 		// Don't resolve if velocities are separating
 		if(velAlongNormal > 0)
 			return;
 
-		// Calculate restitution [elasticity]
-		// Assuming perfect elasticity [1.0]
-		float e = 1; // float e = min(A.elasticity, B.elasticity);
+		float elasticity = 0.9f; // float e = min(A.elasticity, B.elasticity);
 
-		// Calculate impulse [j]
-		float scalarImpulse = -(1 + e) * velAlongNormal;
+		float scalarImpulse = -(1 + elasticity) * velAlongNormal;
 		scalarImpulse /= 1 / mass + 1 / B.mass;
 
-		// Inverse mass [invMass] is used a lot; put Object.invMass  = 1 / Obj.mass a property of the object...
-
-		// Apply the impulse
-			// This is so ugly ( T o T)
-			// scalarImpulse * normal
 		Vector2D impulse = normal.scale(scalarImpulse);
 
 		//velocity -= 1/ A.mass * impulse
 		//velocity = velocity.subtract(impulse);
-		velocity = velocity.subtract(impulse.scale((1/mass)));
+		acceleration = velocity.subtract(impulse.scale((mass))).scale(-100);
 
 		//B.velocity += 1/ B.mass * impulse
 		//B.velocity = B.velocity.add(impulse);
-		B.velocity = velocity.add(impulse.scale((1/B.mass)));
-
-
+		B.acceleration = B.velocity.add(impulse.scale((B.mass))).scale(-100);
 
 		// For collisions involving differing masses
 		/*
@@ -94,31 +83,10 @@ public abstract class PhysicsObject extends Vector2D {
 
 	//	Pairs the circles in list for localCollision
 	//
-	public static Map<PhysicsCircle, PhysicsCircle> pair(List<PhysicsCircle> circles) {
-
-		Map<PhysicsCircle, PhysicsCircle> keyPairs = new HashMap<PhysicsCircle, PhysicsCircle>();
-
-		for	(int i = 0; i < circles.size(); i++){
-			for (int j =0; j < circles.size(); j++){
-				PhysicsCircle refCircle = circles.get(i);
-				PhysicsCircle oppCircle = circles.get(j);
-
-				if(i == j) continue;
-
-				if((refCircle.radius + oppCircle.radius) >= refCircle.position.distance(oppCircle.position).magnitude()){
-					keyPairs.put(refCircle, oppCircle);
-				}
-			}
-		}
-		return keyPairs;
-	}
 
 	// 	Cull duplicate pairs
 	//	Buggy code ToT
-	public void cullDupes(Map<PhysicsCircle, PhysicsCircle> circlePairs){
-
-
-
+	public void cullDupes(Map<PhysicsCircle, PhysicsCircle> pairs){
 
 
 

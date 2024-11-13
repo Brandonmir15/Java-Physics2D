@@ -67,3 +67,12 @@
      - sort entries
      - cull all duplicate pairs
     [Implement norrowCollision]
+
+# Collision Implementation
+    Velocity loss during application
+    - CC state unresvoled
+    - Left and right bounds velocity 0'd
+    - First Physics2D Circle is "unique"
+    
+    Our implementation of acceleration might be cooked
+
